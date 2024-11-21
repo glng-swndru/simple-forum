@@ -6,7 +6,7 @@ services:
     ports:
       - "3307:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=Br41nsc00l#12
-      - MYSQL_DATABASE=forum
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
-      - C:/Users/Gilang/go/Development/Development_db:/var/lib/mysql
+      - ./Development_db:/var/lib/mysql
