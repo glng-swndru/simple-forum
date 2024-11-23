@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/glng-swndru/simple-forum/internal/configs"
 	"github.com/glng-swndru/simple-forum/internal/handlers/memberships"
+	membershipRepo "github.com/glng-swndru/simple-forum/internal/repository/memberships"
+	"github.com/glng-swndru/simple-forum/pkg/internalsql"
 )
 
 func main() {
@@ -27,6 +29,12 @@ func main() {
 	cfg = configs.Get() // Ambil konfigurasi yang sudah diinisialisasi.
 	log.Println("config", cfg)
 
+	db, err := internalsql.Connect(cfg.Database.Host)
+	if err != nil {
+		log.Fatal("Gagal inisiasi database", err)
+	}
+
+	_ = membershipRepo.NewRepository(db)
 	// Buat handler untuk route membership dan daftarkan route-nya.
 	membershipHandler := memberships.NewHandler(r)
 	membershipHandler.RegisterRoute()
