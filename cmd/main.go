@@ -36,7 +36,7 @@ func main() {
 
 	_ = membershipRepo.NewRepository(db)
 	// Buat handler untuk route membership dan daftarkan route-nya.
-	membershipHandler := memberships.NewHandler(r)
+	membershipHandler := memberships.NewHandler(r, nil)
 	membershipHandler.RegisterRoute()
 
 	// Jalankan server pada port yang ditentukan di file konfigurasi.
