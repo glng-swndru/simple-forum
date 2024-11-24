@@ -2,4 +2,4 @@ service:
   port: ":9876"
 
 database:
-  host: "root:masato12@tcp(localhost:3306)/forum"
+  host: "root:masato12@tcp(localhost:3306)/forum?parseTime=true"

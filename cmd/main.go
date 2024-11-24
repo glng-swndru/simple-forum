@@ -7,26 +7,25 @@ import (
 	"github.com/glng-swndru/simple-forum/internal/configs"
 	"github.com/glng-swndru/simple-forum/internal/handlers/memberships"
 	membershipRepo "github.com/glng-swndru/simple-forum/internal/repository/memberships"
+	membershipSvc "github.com/glng-swndru/simple-forum/internal/service/memberships"
 	"github.com/glng-swndru/simple-forum/pkg/internalsql"
 )
 
 func main() {
-	// Membuat instance default dari router Gin.
 	r := gin.Default()
 
-	var cfg *configs.Config // Variabel untuk menyimpan konfigurasi.
+	var cfg *configs.Config
 
-	// Inisialisasi konfigurasi aplikasi.
 	err := configs.Init(
-		configs.WithConfigFolder([]string{"./internal/configs"}), // Tentukan folder konfigurasi.
-		configs.WithConfigFile("config"),                         // Nama file konfigurasi.
-		configs.WithConfigType("yaml"),                           // Tipe file konfigurasi.
+		configs.WithConfigFolder([]string{"./internal/configs"}),
+		configs.WithConfigFile("config"),
+		configs.WithConfigType("yaml"),
 	)
 	if err != nil {
-		log.Fatal("Gagal inisiasi config") // Hentikan aplikasi jika konfigurasi gagal di-load.
+		log.Fatal("Gagal inisiasi config")
 	}
 
-	cfg = configs.Get() // Ambil konfigurasi yang sudah diinisialisasi.
+	cfg = configs.Get()
 	log.Println("config", cfg)
 
 	db, err := internalsql.Connect(cfg.Database.Host)
@@ -34,11 +33,12 @@ func main() {
 		log.Fatal("Gagal inisiasi database", err)
 	}
 
-	_ = membershipRepo.NewRepository(db)
-	// Buat handler untuk route membership dan daftarkan route-nya.
-	membershipHandler := memberships.NewHandler(r, nil)
+	membershipRepo := membershipRepo.NewRepository(db)
+
+	membershipService := membershipSvc.NewService(membershipRepo)
+
+	membershipHandler := memberships.NewHandler(r, membershipService)
 	membershipHandler.RegisterRoute()
 
-	// Jalankan server pada port yang ditentukan di file konfigurasi.
 	r.Run(cfg.Service.Port)
 }
