@@ -8,7 +8,8 @@ type Config struct {
 
 // Service adalah struktur untuk menyimpan konfigurasi terkait layanan (service).
 type Service struct {
-	Port string `mapstructure:"port"` // Port yang digunakan oleh service.
+	Port      string `mapstructure:"port"`
+	SecretJWT string `mapstructure:"secretJWT"`
 }
 
 // Database adalah struktur utama yang menyimpan konfigurasi terkait database.

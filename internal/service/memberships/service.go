@@ -3,6 +3,7 @@ package memberships
 import (
 	"context"
 
+	"github.com/glng-swndru/simple-forum/internal/configs"
 	"github.com/glng-swndru/simple-forum/internal/model/memberships"
 )
 
@@ -12,11 +13,13 @@ type MembershipRepository interface {
 }
 
 type service struct {
+	cfg            *configs.Config
 	membershipRepo MembershipRepository
 }
 
-func NewService(membershipRepo MembershipRepository) *service {
+func NewService(cfg *configs.Config, membershipRepo MembershipRepository) *service {
 	return &service{
+		cfg:            cfg,
 		membershipRepo: membershipRepo,
 	}
 }
