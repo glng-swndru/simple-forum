@@ -24,7 +24,7 @@ func (h *Handler) CreateComment(c *gin.Context) {
 	postID, err := strconv.ParseInt(postIDStr, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": errors.New("postID pada param tidak valid"),
+			"error": errors.New("postID pada param tidak valid").Error(),
 		})
 		return
 	}
