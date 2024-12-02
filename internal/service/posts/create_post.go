@@ -10,19 +10,19 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (s *service) CreatePost(ctx context.Context, UserID int64, req posts.CreatePostRequest) error {
+func (s *service) CreatePost(ctx context.Context, userID int64, req posts.CreatePostRequest) error {
 	PostHashtags := strings.Join(req.PostHashtags, ",")
 
 	now := time.Now()
 	model := posts.PostModel{
-		UserID:       UserID,
+		UserID:       userID,
 		PostTitle:    req.PostTitle,
 		PostContent:  req.PostContent,
 		PostHashtags: PostHashtags,
 		CreatedAt:    now,
 		UpdatedAt:    now,
-		CreatedBy:    strconv.FormatInt(UserID, 10),
-		UpdatedBy:    strconv.FormatInt(UserID, 10),
+		CreatedBy:    strconv.FormatInt(userID, 10),
+		UpdatedBy:    strconv.FormatInt(userID, 10),
 	}
 	err := s.postRepo.CreatePost(ctx, model)
 	if err != nil {
