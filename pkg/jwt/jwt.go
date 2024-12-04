@@ -32,7 +32,7 @@ func ValidateToken(tokenStr, secretKey string) (int64, string, error) {
 		return key, nil
 	})
 	if err != nil {
-		return 0, "", nil
+		return 0, "", err
 	}
 
 	if !token.Valid {

@@ -11,6 +11,7 @@ import (
 
 func (h *Handler) UpsertUserActivity(c *gin.Context) {
 	ctx := c.Request.Context()
+
 	var request posts.UserActivityRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
