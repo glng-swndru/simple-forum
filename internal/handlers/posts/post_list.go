@@ -2,17 +2,18 @@ package posts
 
 import (
 	"errors"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
-func(h *Handler) GetAllPost(c *gin.Context) {
+func (h *Handler) GetAllPost(c *gin.Context) {
 	ctx := c.Request.Context()
 	pageIndexStr := c.Query("PageIndex")
 	pageSizeStr := c.Query("PageSize")
 
-	pageIndex,  err := strconv.Atoi(pageIndexStr)
+	pageIndex, err := strconv.Atoi(pageIndexStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": errors.New("invalid page index").Error(),
