@@ -21,7 +21,7 @@ func (h *Handler) Login(c *gin.Context) {
 	}
 
 	// Memanggil service untuk memproses login dan mendapatkan token akses.
-	accessToken, err := h.membershipSvc.Login(ctx, request)
+	accessToken, refreshToken, err := h.membershipSvc.Login(ctx, request)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(), // Response jika terjadi kesalahan di service.
@@ -31,7 +31,8 @@ func (h *Handler) Login(c *gin.Context) {
 
 	// Mengembalikan token akses dalam respons JSON jika login berhasil.
 	response := memberships.LoginResponse{
-		AccessToken: accessToken,
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
 	}
 	c.JSON(http.StatusOK, response)
 }
