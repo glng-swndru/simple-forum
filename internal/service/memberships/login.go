@@ -3,6 +3,7 @@ package memberships
 import (
 	"context"
 	"errors"
+	"strconv"
 	"time"
 
 	"github.com/glng-swndru/simple-forum/internal/model/memberships"
@@ -51,6 +52,10 @@ func (s *service) Login(ctx context.Context, req memberships.LoginRequest) (stri
 		UserID:       user.ID,
 		RefreshToken: refreshToken,
 		ExpiredAt:    time.Now().Add(10 * 24 * time.Hour),
+		CreatedAt:    time.Now(),
+		UpdatedAt:    time.Now(),
+		CreatedBy:    strconv.FormatInt(user.ID, 10),
+		UpdatedBy:    strconv.FormatInt(user.ID, 10),
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("error inserting refresh token to database")
