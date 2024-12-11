@@ -13,12 +13,20 @@ type (
 		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
+
+	RefreshTokenRequest struct {
+		Token string `json:"token"`
+	}
 )
 
 type (
 	LoginResponse struct {
 		AccessToken  string `json:"accessToken"`
 		RefreshToken string `json:"refreshToken"`
+	}
+
+	RefreshResponse struct {
+		AccessToken string `json:"accessToken"`
 	}
 )
 
